@@ -111,6 +111,22 @@ contract VotingDApp {
         emit VoteCast(voterID, candidateID);
     }
 
+    function getAllCandidates() external view returns (Candidate[] memory) {
+        uint candidateCount = candidateIDs.length;
+
+        Candidate[] memory allCandidates = new Candidate[](candidateCount);
+
+        for (uint i = 0; i < candidateCount; i++) {
+            string memory candidateId = candidateIDs[i];
+
+            Candidate memory candidate = candidates[candidateId];
+
+            allCandidates[i] = candidate;
+        }
+
+        return allCandidates;
+    }
+
     function Tallying()
         external
         view

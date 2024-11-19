@@ -94,7 +94,6 @@ contract('VotingDApp',(accounts)=>{
           assert.equal(winner[1].id,"2","Winner 2 ID mismatch");
     });
 
-    // TODO: Fix this test
     it("Should prevent voting beyond the set period",async()=>{
          await votingDApp.createCandidate("1","John Doe","profile imageurl",{from:admin});
 
@@ -105,14 +104,10 @@ contract('VotingDApp',(accounts)=>{
          await votingDApp.setVotingPeriod(startTime,endTime)
 
          
+         await time.increase(time.duration.hours(5));
 
-
-         await time.increase(time.duration.minutes(30));
-
-        //  await expectRevert(votingDApp.vote(voter1,"1",{from:voter1}),"Voting is not open");
+         await expectRevert(votingDApp.vote(voter1,"1",{from:voter1}),"Voting is not open");
          
-
-
     })
 
 })
